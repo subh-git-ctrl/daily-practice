@@ -1,0 +1,26 @@
+1class Solution {
+2public:
+3    string interpret(string command) 
+4    {
+5        string code="";
+6        for(int i=0;i< command.size();i++)
+7        {
+8            if(command[i]=='G')
+9            code=code+"G";
+10            else if(command[i+1]==')')
+11            {
+12                code=code+"o";
+13                i=i+1;
+14            }
+15            else
+16            {
+17                code=code+"al";
+18                i=i+3;
+19            }
+20
+21        }
+22
+23        return code;
+24        
+25    }
+26};
