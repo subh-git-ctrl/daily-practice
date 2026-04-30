@@ -1,0 +1,33 @@
+1class Solution {
+2public:
+3    int trap(vector<int>& height) {
+4        int n=height.size();
+5        vector<int> pmax (n);
+6        vector<int> smax (n);
+7        //prefix max sum
+8        int pmax_count=INT_MIN;
+9        for(int i=0;i<n;i++){
+10            if(height[i]>pmax_count) pmax_count=height[i];
+11            pmax[i]=pmax_count;
+12        }
+13        //suffix max sum
+14        int smax_count=INT_MIN;
+15        for(int i=n-1;i>=0;i--){
+16            if(height[i]>smax_count) smax_count=height[i];
+17            smax[i]=smax_count;
+18        }
+19
+20        int total=0;
+21        for(int i=0;i<n;i++){
+22            int prefix=pmax[i];//prefix=leftmax
+23            int suffix=smax[i];
+24
+25            if(height[i]<prefix && height[i]<suffix){
+26                total+= min(prefix,suffix) - height[i];
+27            }
+28        }
+29
+30        return total;
+31
+32    }
+33};
