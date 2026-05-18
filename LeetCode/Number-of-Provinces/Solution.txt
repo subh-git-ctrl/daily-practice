@@ -1,0 +1,29 @@
+1class Solution {
+2public:
+3    void DFS(int u,vector<vector<int>>& isConnected,vector<bool> &visited,int &V){
+4        visited[u]=true;
+5
+6        for(int v=0;v<V;v++){
+7            if(!visited[v] && isConnected[u][v]==1){
+8                DFS(v,isConnected,visited,V);
+9            }
+10        }
+11    }
+12    int findCircleNum(vector<vector<int>>& isConnected) {
+13        //unordered_map<int,vector<int>> adj;
+14        int count=0;
+15        
+16        int V= isConnected[0].size();
+17        vector<bool> visited(V+1,0);
+18
+19       
+20
+21        for(int u=0;u<V;u++){
+22            if(visited[u]==false){
+23                DFS(u,isConnected,visited,V);
+24                count++;
+25            }
+26        }
+27        return count;
+28    }
+29};
