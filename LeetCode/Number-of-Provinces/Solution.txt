@@ -1,29 +1,31 @@
 1class Solution {
 2public:
-3    void DFS(int u,vector<vector<int>>& isConnected,vector<bool> &visited,int &V){
-4        visited[u]=true;
-5
-6        for(int v=0;v<V;v++){
-7            if(!visited[v] && isConnected[u][v]==1){
-8                DFS(v,isConnected,visited,V);
-9            }
-10        }
-11    }
-12    int findCircleNum(vector<vector<int>>& isConnected) {
-13        //unordered_map<int,vector<int>> adj;
-14        int count=0;
-15        
-16        int V= isConnected[0].size();
-17        vector<bool> visited(V+1,0);
-18
-19       
-20
-21        for(int u=0;u<V;u++){
-22            if(visited[u]==false){
-23                DFS(u,isConnected,visited,V);
-24                count++;
-25            }
-26        }
-27        return count;
-28    }
-29};
+3    void BFS(int u,vector<vector<int>>& isConnected,vector<bool> &visited,int &V){
+4        queue<int> qu;
+5        qu.push(u);
+6        visited[u]=true;
+7
+8        while(!qu.empty()){
+9            int u=qu.front();
+10            qu.pop();
+11            for(int v=0;v<V;v++){
+12                if(visited[v]==false && isConnected[u][v]==1){
+13                    visited[v]=true;
+14                    qu.push(v);
+15                }
+16            }
+17        }
+18    }
+19    int findCircleNum(vector<vector<int>>& isConnected) {
+20        int V= isConnected[0].size();
+21        int count=0;
+22        vector<bool> visited(V,false);
+23        for(int u=0;u<V;u++){
+24            if(visited[u]==false){
+25                count++;
+26                BFS(u,isConnected,visited,V);
+27            }
+28        }
+29        return count;
+30    }
+31};
