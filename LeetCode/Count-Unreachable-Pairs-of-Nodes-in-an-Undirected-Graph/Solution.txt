@@ -1,0 +1,58 @@
+1class Solution {
+2public:
+3    int Find(int i,vector<int> &parent){
+4        if(i==parent[i]) return i;
+5        return parent[i]=Find(parent[i],parent);
+6    }
+7    void Union(int x,int y,vector<int> &parent){
+8        int x_parent=Find(x,parent);
+9        int y_parent=Find(y,parent);
+10
+11        if(x_parent!=y_parent){
+12            parent[y_parent]=x_parent;
+13        }
+14    }
+15    long long countPairs(int n, vector<vector<int>>& edges) {
+16        vector<int> parent(n);
+17        for(int i=0;i<n;i++){
+18            parent[i]=i;
+19        }
+20
+21        for(auto &e:edges){
+22            Union(e[0],e[1],parent);
+23        }
+24
+25        //the below code needs to be optimized
+26        // int count=0;
+27        // for(int i=0;i<n;i++){
+28        //     for(int j=i+1;j<n;j++){
+29        //         if(Find(i,parent)!=Find(j,parent)) count++;
+30        //     }
+31        // }
+32        // return count;
+33
+34        //finding number of connected components instead will give better.
+35        unordered_map<int,int> mp;
+36        for(int i=0;i<n;i++){
+37            mp[Find(i,parent)]++;
+38        }
+39        // long long prod=0;
+40        // for(auto key1:mp){
+41        //     for(auto key2:mp){
+42        //         if(key1.first!=key2.first){
+43        //             prod+= 1LL * key1.second * key2.second;
+44        //         }
+45        //     }
+46        // }
+47        // return (long long)(prod/2) ;
+48        long long ans=0;
+49        int remaining=n;
+50        for(auto &key:mp){
+51            int parent=key.first;
+52            int child=key.second;
+53            remaining-=child;
+54            ans+= 1LL * remaining * child ;
+55        }
+56        return ans;
+57    }
+58};
