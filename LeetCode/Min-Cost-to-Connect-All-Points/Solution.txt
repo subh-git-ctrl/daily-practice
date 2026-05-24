@@ -1,0 +1,53 @@
+1class Solution {
+2public:
+3    int Find(int i,vector<int> &parent){
+4        if(i==parent[i]) return i;
+5        return parent[i]= Find(parent[i],parent);
+6    }
+7    bool Union(int x,int y,vector<int> &parent){
+8        int x_parent=Find(x,parent);
+9        int y_parent=Find(y,parent);
+10
+11        if(x_parent!=y_parent){
+12            parent[y_parent]=x_parent;
+13            return true;
+14        }
+15        return false;
+16    }
+17    int minCostConnectPoints(vector<vector<int>>& points) {
+18        int V=points.size();
+19        vector<vector<int>> adj;
+20        vector<int> parent(V);
+21        for(int i=0;i<V;i++){
+22            parent[i]=i;
+23        }
+24        for(int i=0;i<V;i++){
+25            for(int j=i+1;j<V;j++){
+26                int x1=points[i][0];
+27                int y1=points[i][1];
+28                int x2=points[j][0];
+29                int y2=points[j][1];
+30                int dist= abs(x1-x2)+abs(y1-y2);
+31                adj.push_back({dist,i,j});
+32
+33
+34            }
+35        }
+36        sort(adj.begin(),adj.end());
+37        int cost=0;
+38        int count=0;
+39        for(auto &e:adj){
+40            if(count==V) break;
+41            int dist=e[0];
+42            int u=e[1];
+43            int v=e[2];
+44
+45            if(Union(u,v,parent)){
+46                cost+=dist;
+47                count++;
+48            }
+49        }
+50        return cost;
+51
+52    }
+53};
