@@ -11,7 +11,7 @@
 11                return false;
 12            int r = (3 * (i / 3)) + (ind / 3);
 13            int c = (3 * (j / 3)) + (ind % 3);
-14            if (r != i && c != j && board[r][c] == board[i][j])
+14            if ((r != i || c != j) && board[r][c] == board[i][j])
 15                return false;
 16        }
 17        return true;
