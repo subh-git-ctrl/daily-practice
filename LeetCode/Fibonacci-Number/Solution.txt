@@ -1,0 +1,18 @@
+1class Solution {
+2public:
+3    int fibonacci_dp(int n,vector<int> &dp){
+4        if(n<=1){
+5            dp[n]=n;
+6            return n;
+7        }
+8
+9        if(dp[n]!=-1) return dp[n];
+10
+11        return dp[n]=fibonacci_dp(n-1,dp)+fibonacci_dp(n-2,dp);
+12    }
+13    int fib(int n) {
+14        vector<int> dp(n+1,-1);
+15        return fibonacci_dp(n,dp);
+16
+17    }
+18};
