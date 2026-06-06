@@ -1,0 +1,36 @@
+1class Solution {
+2public:
+3    vector<vector<int>> merge_intervals(vector<vector<int>>& intervals){
+4        sort(intervals.begin(),intervals.end());
+5        int n=intervals.size();
+6        vector<int> curr_pair=intervals[0];
+7        vector<vector<int>> ans;
+8        for(int i=1;i<n;i++){
+9            auto it=intervals[i];
+10            
+11
+12            if(it[0]<=curr_pair[1]){
+13                curr_pair[1]=max(curr_pair[1],it[1]);
+14                
+15            }
+16            else {
+17                ans.push_back(curr_pair);
+18                curr_pair[0]=(it[0]);
+19                curr_pair[1]=(it[1]);
+20            }
+21        }
+22        ans.push_back(curr_pair);
+23
+24        return ans;
+25    }
+26    long long minEnergy(int n, int brightness, vector<vector<int>>& intervals) {
+27        vector<vector<int>> merged= merge_intervals(intervals);
+28        long long interval_sum=0;
+29        for(auto it:merged){
+30            interval_sum+=it[1]-it[0]+1;
+31        }
+32        long long light_bulbs= ceil((double)brightness/3);
+33        return light_bulbs*interval_sum;
+34        
+35    }
+36};
