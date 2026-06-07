@@ -1,0 +1,52 @@
+1class Solution {
+2public:
+3    bool asteroidsDestroyed(int mass, vector<int>& asteroids) {
+4        long long currentMass = mass;
+5        
+6        // This tracks how many un-destroyed asteroids we need to check in the current pass.
+7        // Initially, we have to look at all of them.
+8        int remainingAsteroidsCount = asteroids.size();
+9        
+10        // Keep looping as long as there are asteroids left to destroy
+11        while (remainingAsteroidsCount > 0) {
+12            
+13            // 'write_index' will track where to pack the surviving asteroids.
+14            // At the end of the loop, 'write_index' will equal the total number of survivors.
+15            int write_index = 0;
+16            
+17            // Scan only the active pool of un-destroyed asteroids
+18            for (int i = 0; i < remainingAsteroidsCount; i++) {
+19                int asteroidMass = asteroids[i];
+20                
+21                if (currentMass < asteroidMass) {
+22                    // CASE 1: Planet is small. 
+23                    // The asteroid survives! Move it tightly to the front of the array.
+24                    asteroids[write_index] = asteroidMass;
+25                    write_index++; 
+26                } else {
+27                    // CASE 2: Planet is big. Asteroid is destroyed.
+28                    currentMass += asteroidMass;
+29                    
+30                    // Optimized: If planet mass crosses 100,000, we are now bigger 
+31                    // than any possible individual asteroid in the game constraints.
+32                    if (currentMass >= 100000) {
+33                        return true;
+34                    }
+35                }
+36            }
+37            
+38            // STALEMATE CHECK: If number of survivors (write_index) is exactly equal 
+39            // to number we started loop with, it means planet didn't eat 
+40            // a single asteroid this turn. It is permanently stuck.
+41            if (remainingAsteroidsCount == write_index) {
+42                return false;
+43            }
+44            
+45            // Shrink search pool for next pass to only include survivors
+46            remainingAsteroidsCount = write_index;
+47        }
+48        
+49        // 0 remaining astroids, all are destroyed
+50        return true;
+51    }
+52};
