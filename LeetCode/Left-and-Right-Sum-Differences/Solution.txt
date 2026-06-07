@@ -1,0 +1,4 @@
+1class Solution:
+2    def leftRightDifference(self, nums: List[int]) -> List[int]:
+3        return [abs(l - r) for l, r in zip(accumulate(nums), list(accumulate(nums[::-1]))[::-1])] 
+4
