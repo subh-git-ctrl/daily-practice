@@ -1,15 +1,15 @@
 1class Solution {
 2public:
-3    int f(int i,int n,vector<int> &dp){
-4        if(i==n) return 1;
-5        if(i>n) return 0;
-6        if(dp[i]!=-1) return dp[i];
-7        int left=f(i+1,n,dp);
-8        int right=f(i+2,n,dp);
-9        return dp[i]=left+right;
-10    }
-11    int climbStairs(int n) {
-12        vector<int> dp(n+1,-1);
-13        return f(0,n,dp);
+3    int climbStairs(int n) {
+4        vector<int> dp(n+1,-1);
+5        dp[n]=1;
+6        for(int i=n-1;i>=0;i--){
+7            int left =0,right=0;
+8
+9            left=dp[i+1];
+10            if(i+2<=n) right=dp[i+2];
+11            dp[i]=left+right;
+12        }
+13        return dp[0];
 14    }
 15};
