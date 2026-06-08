@@ -1,0 +1,43 @@
+1#include <cmath>
+2class Solution {
+3public:
+4    int minEatingSpeed(vector<int>& piles, int h)
+5     {
+6        int i=0;
+7       
+8        int max=piles[0];
+9        for(i=0;i<piles.size();i++)
+10        {
+11            
+12            if(piles[i]>max)
+13            max=piles[i];
+14        }
+15        int mid;
+16        int l=1;
+17        int r=max;
+18        int n=piles.size();
+19        int cnt=n;
+20        while(l < r)
+21{
+22    int mid = l + (r - l) / 2;
+23
+24    long long c = 0;
+25
+26    for(int p : piles)
+27    {
+28        c += ceil((double)p / mid);
+29    }
+30
+31    if(c <= h)
+32    {
+33        r = mid;
+34    }
+35    else
+36    {
+37        l = mid + 1;
+38    }
+39}
+40
+41return l;
+42    }
+43};
