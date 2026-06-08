@@ -1,16 +1,15 @@
 1class Solution {
 2public:
-3    int ways(int n,vector<int> &dp){
-4        if(n<=1) return dp[n]=1;
-5        
-6        if(dp[n]!=-1) return dp[n];
-7        int left= ways(n-1,dp);
-8        int right=ways(n-2,dp);
-9        
-10        return dp[n]=left+right;
-11    }
-12    int climbStairs(int n) {
-13        vector<int> dp(n+1,-1);
-14        return ways(n,dp);
-15    }
-16};
+3    int f(int i,int n,vector<int> &dp){
+4        if(i==n) return 1;
+5        if(i>n) return 0;
+6        if(dp[i]!=-1) return dp[i];
+7        int left=f(i+1,n,dp);
+8        int right=f(i+2,n,dp);
+9        return dp[i]=left+right;
+10    }
+11    int climbStairs(int n) {
+12        vector<int> dp(n+1,-1);
+13        return f(0,n,dp);
+14    }
+15};
