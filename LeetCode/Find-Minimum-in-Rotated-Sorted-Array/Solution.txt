@@ -1,0 +1,30 @@
+1class Solution {
+2public:
+3    int findMin(vector<int>& nums)
+4     {
+5         // Initialize low and high pointers
+6        int low = 0, high = nums.size() - 1;
+7
+8        // Binary search loop
+9        while (low < high) {
+10
+11            // Calculate mid index
+12            int mid = low + (high - low) / 2;
+13
+14            // Check which half to discard
+15            if (nums[mid] > nums[high]) {
+16
+17                // Minimum lies in right half
+18                low = mid + 1;
+19
+20            } else {
+21
+22                // Minimum lies in left half (including mid)
+23                high = mid;
+24            }
+25        }
+26
+27        // Return the minimum element
+28        return nums[low];    
+29    }
+30};
