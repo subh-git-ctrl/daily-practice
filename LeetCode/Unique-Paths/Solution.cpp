@@ -13,6 +13,22 @@
 13    }
 14    int uniquePaths(int m, int n) {
 15        vector<vector<int>> dp(m,vector<int> (n,-1));
-16        return f(0,0,m,n,dp);
-17    }
-18};
+16        //return f(0,0,m,n,dp); //memoization approach
+17
+18        //Tabulation
+19        dp[m-1][n-1]=1;
+20        for(int row=m-1;row>=0;row--){
+21            for(int col=n-1;col>=0;col--){
+22                if(row==m-1 && col==n-1) dp[row][col]=1;
+23                else {
+24                    int right=0, down=0;
+25                    if(col+1<=n-1) right=f(row,col+1,m,n,dp);
+26                    if(row+1<=m-1) down=f(row+1,col,m,n,dp);
+27                    dp[row][col]=right+down;
+28                }
+29            }
+30        }
+31        return dp[0][0];
+32
+33    }
+34};
