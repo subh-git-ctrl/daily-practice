@@ -1,33 +1,25 @@
 1class Solution {
 2public:
-3    int f(int i,int j,int m,int n,vector<vector<int>>& grid,vector<vector<int>> &dp){
-4        if(i==m-1 && j==n-1) return grid[i][j];
-5        if(i>=m || j>=n) return 1e9;
-6        if(dp[i][j]!=-1) return dp[i][j];
-7        int curr=grid[i][j];
-8        int right= curr+f(i,j+1,m,n,grid,dp);
-9        int down = curr+f(i+1,j,m,n,grid,dp);
-10
-11        return dp[i][j]=min(right,down); 
-12    }
-13    int minPathSum(vector<vector<int>>& grid) {
-14        int m=grid.size();
-15        int n=grid[0].size();
-16        vector<vector<int>> dp(m,vector<int> (n,0));
-17        //return f(0,0,m,n,grid,dp);
-18        dp[m-1][n-1]=grid[m-1][n-1];
-19        for(int i=m-1;i>=0;i--){
-20            for(int j=n-1;j>=0;j--){
-21                if(i==m-1 && j==n-1) continue;
-22                else{
-23                    int curr=grid[i][j];
-24                    int right=1e9,down=1e9;
-25                    if(j+1<=n-1) right= curr+dp[i][j+1];
-26                    if(i+1<=m-1) down = curr+dp[i+1][j];
-27                    dp[i][j] = min(right,down);
-28                }
-29            }
-30        }
-31        return dp[0][0];
-32    }
-33};
+3    int minPathSum(vector<vector<int>>& grid) {
+4        int m=grid.size();
+5        int n=grid[0].size();
+6        vector<int> prev(n);
+7        //return f(0,0,m,n,grid,dp);
+8        prev[n-1]=grid[m-1][n-1];
+9        for(int i=m-1;i>=0;i--){
+10            vector<int> curr(n,0);
+11            for(int j=n-1;j>=0;j--){
+12                if(i==m-1 && j==n-1) curr[n-1]=grid[m-1][n-1];
+13                else{
+14                    int curr_value=grid[i][j];
+15                    int right=1e9,down=1e9;
+16                    if(j+1<=n-1) right= curr_value+curr[j+1];
+17                    if(i+1<=m-1) down = curr_value+prev[j];
+18                    curr[j] = min(right,down);
+19                }
+20            }
+21            prev=curr;
+22        }
+23        return prev[0];
+24    }
+25};
