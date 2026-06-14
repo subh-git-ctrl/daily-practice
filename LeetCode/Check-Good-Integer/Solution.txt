@@ -1,0 +1,15 @@
+1class Solution {
+2public:
+3    bool checkGoodInteger(int n) {
+4        int m=n;
+5        int digitSum=0,squareSum=0;
+6        while(m!=0){
+7            int rem=m%10;
+8            digitSum+= rem;
+9            squareSum+= rem*rem;
+10            m/=10;
+11        }
+12        if(squareSum-digitSum >=50) return true;
+13        return false;
+14    }
+15};
