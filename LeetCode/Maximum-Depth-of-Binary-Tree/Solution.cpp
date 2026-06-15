@@ -20,6 +20,26 @@
 20        return 1 + max(lh,rh);
 21    }
 22    int maxDepth(TreeNode* root) {
-23        return depth(root);
-24    }
-25};
+23        // //recursive method
+24        //return depth(root);
+25
+26        //Using level order
+27        if(!root) return 0;
+28        queue<TreeNode*> qu;
+29        qu.push(root);
+30        int level=0;
+31
+32        while(!qu.empty()){
+33            int size=qu.size();
+34            while(size--){
+35                auto p = qu.front();
+36                qu.pop();
+37
+38                if(p->left != NULL) qu.push(p->left);
+39                if(p->right != NULL) qu.push(p->right);
+40            }
+41            level++;
+42        }
+43        return level;
+44    }
+45};
