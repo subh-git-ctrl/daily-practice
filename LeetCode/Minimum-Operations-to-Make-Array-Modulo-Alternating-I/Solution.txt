@@ -1,0 +1,168 @@
+1class Solution {
+2public:
+3    int minOperations(vector<int>& arr, int k) {
+4        //pq which stores freq with mod
+5        //pq stores freq, mod, e/o
+6        
+7        int ans=INT_MAX;
+8
+9        for(int i =0;i<k;i++){
+10            for(int j=0;j<k;j++){
+11                if(i==j)continue;
+12                int evenmod=i,oddmod=j;
+13                
+14        int ops=0;
+15
+16                for(int i=0;i<arr.size();i+=2){
+17
+18            int cmod=arr[i]%k;
+19            // cout<<"evenmod = "<<evenmod<<"   , cmod= "<<cmod<< endl;
+20
+21            if(cmod!=evenmod){
+22                int a=0;
+23                int x=cmod;
+24                while(x!=evenmod){
+25                    x++;
+26                    a++;
+27                    if(x==k)x=0;
+28                }
+29
+30
+31                int b=0;
+32                int y=cmod;
+33                while(y!=evenmod){
+34                    y--;
+35                    b++;
+36                    if(y==-1)y=k-1;
+37                }
+38
+39                   // cout<<arr[i]<<"   to make"<<cmod<<"  =  "<<evenmod<<endl;
+40                // cout<<min(a,b);
+41                // cout<<" ----------"<<endl;
+42                ops+=(min(a,b));
+43            }
+44        }
+45
+46
+47        // cout<<" -------------------------- "<<endl;
+48
+49         for(int i=1;i<arr.size();i+=2){
+50
+51            int cmod=arr[i]%k;
+52            // cout<<cmod<<endl;
+53                        // cout<<"oddmod = "<<oddmod<<"   , cmod= "<<cmod<< endl;
+54
+55            if( cmod!=oddmod){
+56
+57                int a=0;
+58                int x=cmod;
+59                
+60                while(x!=oddmod){
+61                    x++;
+62                    a++;
+63                    if(x==k)x=0;
+64                }
+65
+66
+67                int b=0;
+68                int y=cmod;
+69                while(y!=oddmod){
+70                    y--;
+71                    b++;
+72                    if(y==-1)y=k-1;
+73                }
+74
+75                // cout<<arr[i]<<"   to make "<<cmod<<"  =  "<<oddmod<<endl;
+76                // cout<<min(a,b)<<endl;
+77                // cout<<" ----------"<<endl;
+78                ops+=(min(a,b));
+79            }
+80            
+81        }
+82        
+83            ans=min(ops,ans);   
+84            }
+85        }
+86
+87
+88        
+89
+90        // // cout<<evenmod<<"  "<<oddmod<<endl;
+91        
+92        // for(int i=0;i<arr.size();i+=2){
+93
+94        //     int cmod=arr[i]%k;
+95        //     // cout<<"evenmod = "<<evenmod<<"   , cmod= "<<cmod<< endl;
+96
+97        //     if(cmod!=evenmod){
+98        //         int a=0;
+99        //         int x=cmod;
+100        //         while(x!=evenmod){
+101        //             x++;
+102        //             a++;
+103        //             if(x==k)x=0;
+104        //         }
+105
+106
+107        //         int b=0;
+108        //         int y=cmod;
+109        //         while(y!=evenmod){
+110        //             y--;
+111        //             b++;
+112        //             if(y==-1)y=k-1;
+113        //         }
+114
+115        //            // cout<<arr[i]<<"   to make"<<cmod<<"  =  "<<evenmod<<endl;
+116        //         cout<<min(a,b);
+117        //         // cout<<" ----------"<<endl;
+118        //         ops+=(min(a,b));
+119        //     }
+120        // }
+121
+122
+123        // // cout<<" -------------------------- "<<endl;
+124
+125        //  for(int i=1;i<arr.size();i+=2){
+126
+127        //     int cmod=arr[i]%k;
+128        //     // cout<<cmod<<endl;
+129        //                 // cout<<"oddmod = "<<oddmod<<"   , cmod= "<<cmod<< endl;
+130
+131        //     if( cmod!=oddmod){
+132
+133        //         int a=0;
+134        //         int x=cmod;
+135                
+136        //         while(x!=oddmod){
+137        //             x++;
+138        //             a++;
+139        //             if(x==k)x=0;
+140        //         }
+141
+142
+143        //         int b=0;
+144        //         int y=cmod;
+145        //         while(y!=oddmod){
+146        //             y--;
+147        //             b++;
+148        //             if(y==-1)y=k-1;
+149        //         }
+150
+151        //         // cout<<arr[i]<<"   to make "<<cmod<<"  =  "<<oddmod<<endl;
+152        //         cout<<min(a,b)<<endl;
+153        //         // cout<<" ----------"<<endl;
+154        //         ops+=(min(a,b));
+155        //     }
+156            
+157        // }
+158        
+159        
+160        
+161        
+162        
+163        return ans;
+164    
+165    
+166    
+167    }
+168};
