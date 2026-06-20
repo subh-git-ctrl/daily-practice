@@ -1,0 +1,56 @@
+1class Solution {
+2public:
+3    
+4/*
+5    so we first wanna find out which positions are unlit
+6
+7    
+8    
+9*/  
+10void lightup(vector<int>&lit, int ptr){
+11    lit[ptr]++;
+12    int n=lit.size();
+13    if(ptr-1>=0)lit[ptr-1]++;
+14    if(ptr+1<=n)lit[ptr+1]++;
+15    return;
+16    
+17}
+18    int minLights(vector<int>& lights) {
+19        int n=lights.size();
+20        vector<int>litt(n+1,0);        
+21    
+22        // int ptr=0;
+23        for(int i=0;i<n;i++){
+24            if(lights[i]!=0){
+25                int leftmost=max(0,i-lights[i]);
+26                int rightmost=min(n-1,i+lights[i]);
+27
+28                litt[leftmost]++;
+29                litt[rightmost+1]--;
+30            }
+31        }
+32        vector<int>lit(n+1,0);
+33        for(int i=0;i<=n;i++){
+34            if(i==0)lit[i]=litt[i];
+35            else lit[i]=litt[i]+lit[i-1];
+36        }
+37        // for(auto ele : lit)cout<<ele<<" ";
+38        // for(int i=)
+39        int ans=0;
+40        for(int i=0;i<n;i++){
+41            if(lit[i]==0){
+42                if(i+1<n && lit[i+1]==0){
+43
+44                    lightup(lit,i+1);
+45                    ans++;
+46                }
+47                else{
+48                    lightup(lit,i);
+49                    ans++;
+50                }
+51            }
+52        }
+53        return ans;
+54        
+55    }
+56};
