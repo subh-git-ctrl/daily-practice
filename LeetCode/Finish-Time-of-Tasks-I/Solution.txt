@@ -1,40 +1,49 @@
 1class Solution {
 2public:
-3    // This solution is valid for only binary tree
-4    using ll = long long;
-5    ll f(int i, unordered_map<int, vector<int>>& adj, vector<int>& baseTime,
-6         vector<ll>& finishTime) {
-7        if (adj.count(i) == 0)
-8            return finishTime[i] = baseTime[i];
-9        if (finishTime[i] != -1)
-10            return finishTime[i];
-11        vector<int> nodes;
-12        nodes = adj[i];
-13
-14        ll size = nodes.size();
-15
-16        ll latest = LLONG_MIN, earliest = LLONG_MAX;
-17        ll ownduration =0;
-18        for (ll ind = 0; ind < size; ind++) {
-19            ll child= f(nodes[ind], adj, baseTime, finishTime) ;
-20            earliest = min(earliest, child);
-21            latest = max(latest, child);
-22            
-23            
-24        }
-25        ownduration = latest - earliest + baseTime[i];
-26        return finishTime[i] = latest + ownduration;
-27
-28    }
-29    long long finishTime(int n, vector<vector<int>>& edges,
-30                         vector<int>& baseTime) {
-31        unordered_map<int, vector<int>> adj;
-32        for (auto& e : edges) {
-33            auto u = e[0];
-34            auto v = e[1];
-35            adj[u].push_back(v);
-36        }
-37        vector<ll> finishTime(n, -1);
-38        return f(0, adj, baseTime, finishTime);
-39    }
-40};
+3#define ll long long
+4    ll solver(int ptr, vector<vector<int>>&adjlist,vector<int>& basetime){
+5
+6
+7        ll currentbasetime=basetime[ptr];
+8        // if(adjlist[ptr].empty())return currentbasetime;
+9        bool found=false;
+10        ll latest=LLONG_MIN,earliest=LLONG_MAX;
+11        // vector<ll>childrentimes;
+12
+13        for(auto child : adjlist[ptr]){
+14            ll ctime=solver(child,adjlist,basetime);
+15            latest=max(latest,ctime);
+16            earliest=min(earliest,ctime);
+17            found=true;
+18            // cout<<"time for "<<child<<" == "<<ctime<<endl;
+19        }
+20
+21        // for(auto ele : childrentimes){
+22        // }
+23        if(!found)return currentbasetime;
+24        ll time=(latest-earliest+currentbasetime)+latest;
+25    return time;
+26    
+27    }
+28    
+29    long long finishTime(int n, vector<vector<int>>& edges, vector<int>& basetime) {
+30        vector<vector<int>>adjlist(n,vector<int>{});
+31
+32
+33        for(auto e : edges){
+34
+35            int u=e[0];
+36            int v=e[1];
+37            adjlist[u].push_back(v);
+38            
+39        }
+40        // for(int i=0;i<n;i++){
+41        //     cout<<i<<" : ";
+42        //     for(auto b : adjlist[i])cout<<b<<" ";
+43        //     cout<<endl;
+44        // }
+45        ll ans=solver(0,adjlist,basetime);
+46
+47        return ans;
+48    }
+49};
