@@ -1,0 +1,11 @@
+1class Solution {
+2public:
+3    vector<string> createGrid(int m, int n) {
+4        vector<string> grid(m, string(n,'#'));
+5        grid[0]=string(n,'.');
+6        for(int i=1;i<m;i++){
+7            grid[i][n-1]='.';
+8        }
+9        return grid;
+10    }
+11};
