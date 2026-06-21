@@ -1,0 +1,27 @@
+1class Solution {
+2public:
+3    bool first_last(long long sum,int x){
+4        int m=sum;
+5        int r=sum%10;
+6        long long count= (sum==0)? 1: floor(log10(sum))+1 ;
+7        long long temp=sum;
+8        while(temp>=10){
+9            temp/=10;
+10        }
+11        int first=temp;
+12
+13        return (first==x) && (r==x) ;
+14    }
+15    int countValidSubarrays(vector<int>& nums, int x) {
+16        int n=nums.size();
+17        int count=0;
+18        for(int i=0;i<n;i++){
+19            long long sum=0;
+20            for(int j=i;j<n;j++){
+21                sum+=nums[j];
+22                if(first_last(sum,x)) count++;
+23            }
+24        }
+25        return count;
+26    }
+27};
