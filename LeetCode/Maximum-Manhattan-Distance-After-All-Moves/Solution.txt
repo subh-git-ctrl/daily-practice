@@ -1,0 +1,32 @@
+1class Solution {
+2public:
+3    int maxDistance(string moves) {
+4        pair<int,int> coord;
+5        coord={0,0};
+6        unordered_map<char,int> mp;
+7        for(int i=0;i<moves.size();i++){
+8            char ch=moves[i];
+9            if(ch!='_') mp[ch]++;
+10        }
+11        char maximum;
+12        int maxi=-1;
+13        for(auto &m:mp){
+14            if(m.second>maxi){
+15                maxi=m.second;
+16                maximum=m.first;
+17            }
+18        }
+19        for(int i=0;i<moves.size();i++){
+20            if(moves[i]=='_') moves[i]=maximum;
+21        }
+22        for(int i=0;i<moves.size();i++){
+23            char ch=moves[i];
+24            if(ch=='L') coord.first--;
+25            else if(ch=='R') coord.first++;
+26            else if(ch=='U') coord.second++;
+27            else coord.second--;
+28        }
+29
+30        return abs(coord.first) + abs(coord.second) ;
+31    }
+32};
