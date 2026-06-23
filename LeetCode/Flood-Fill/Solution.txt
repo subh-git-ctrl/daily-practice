@@ -1,0 +1,39 @@
+1class Solution {
+2public:
+3    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) 
+4    {
+5        int inicolor=image[sr][sc];
+6        vector<vector<int>> ans=image;
+7        int delrow[]={-1,0,+1,0};
+8        int delcol[]={0,-1,0,+1};
+9        int newcolor=color;
+10
+11        dfs(sr,sc,ans,image,newcolor, delrow,delcol,inicolor);
+12        return ans;
+13    }
+14
+15    void dfs(int row,int col,  vector<vector<int>> &ans,vector<vector<int>>& image,int newcolor,int delrow[], int delcol[],int ini)
+16    {
+17        ans[row][col]=newcolor;
+18
+19        int n=image.size();
+20        int m=image[0].size();
+21        
+22         for(int i=0;i<4;i++)
+23         {
+24            int nrow=row+delrow[i];
+25            int ncol=col+delcol[i];
+26            if(nrow>=0 && nrow <n && ncol>=0 && ncol<m && image[nrow][ncol]==ini && ans[nrow][ncol]!=newcolor)
+27            {
+28                // no do do this ans[nrow][ncol]=newcolor;
+29                //do dfs again
+30                dfs(nrow,ncol,ans,image,newcolor, delrow,delcol,ini);
+31            }
+32
+33         }
+34
+35
+36    }
+37
+38
+39};
