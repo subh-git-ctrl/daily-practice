@@ -1,13 +1,16 @@
-1class Solution {
-2public:
-3    int missingNumber(vector<int>& nums) {
-4        int sum=0;
-5        int n=nums.size();
-6        for(int i=0;i<n;i++){
-7            sum+=nums[i];
-8        }
-9
-10        return (n*(n+1)/2) - sum ;
-11
-12    }
-13};
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        vector<int>v(n+1,-1);
+        for(int i =0;i<nums.size();i++){
+            v[nums[i]] = nums[i];
+        }
+        for(int i =0;i<v.size();i++){
+            if(v[i]==-1)return i;
+        }
+        return 0;
+    }
+};
+
+
